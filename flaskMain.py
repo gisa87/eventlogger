@@ -9,6 +9,7 @@ from flask import Flask, request, render_template, flash, redirect, url_for, ses
 from data import Entries
 from flaskext.mysql import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms.widgets import TextArea
 from passlib.hash import sha256_crypt
 
 
@@ -52,10 +53,11 @@ def viewEntry(id):
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insertEvent():
-	form = InsertEntryForm(request.form)
+	formInsert = InsertEntryForm(request.form)
 	if request.method == 'POST' and form.validate():
+        # if the submit button is pressed handle the data coming from the form
 		return(render_template('insert.html'))
-	return(render_template('insert.html', form=form))
+	return(render_template('insert.html', form=formInsert))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -78,7 +80,8 @@ class RegisterForm(Form):
 	confirm = PasswordField('Confirm password')
 
 class InsertEntryForm(Form):
-	newEntry = StringField('entryBody', [validators.Length(min=3, max=360)])
+    #newEntry = StringField('Log', widget=TextArea())
+	newEntry = StringField('Log', [validators.Length(min=3, max=360)])
 
 if __name__ == '__main__':
     app.run()

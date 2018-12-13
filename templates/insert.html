@@ -5,7 +5,8 @@
 	{% from "includes/_formhelpers.html" import render_field %}
 	<form method='POST' action="">
 		<div class="form-group">
-			{{render_field(form.entryBody, class_="form-control")}}
+			{{render_field(form.newEntry, class_="form-control")}}
+			<!--{{ form.newEntry(cols="35", rows="20") }}-->
 		</div>
 		<p><input type="submitEntry" class="btn btn-primary" value="Enter Log"></p>
 	</form>
